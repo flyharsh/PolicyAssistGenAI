@@ -2,7 +2,7 @@
 
 import os
 from qdrant_client import QdrantClient
-from qdrant_client.http.models import Distance, VectorParams
+from qdrant_client.http.models import Distance, VectorParams, PayloadSchemaType
 
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY", None)
@@ -21,15 +21,18 @@ def get_qdrant_client() -> QdrantClient:
     )
 
 def ensure_collection(client: QdrantClient, vector_size: int):
-    """
-    Ensures the collection exists. Creates it if not.
+    from app.config import QDRANT_COLLECTION
 
-    Args:
-        client (QdrantClient): Qdrant connection
-        vector_size (int): Dimension of embedding vector
-    """
-    if not client.collection_exists(COLLECTION_NAME):
+    if not client.collection_exists(QDRANT_COLLECTION):
         client.recreate_collection(
-            collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE)
+            collection_name=QDRANT_COLLECTION,
+            vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE),
+            on_disk=True
+        )
+
+        # Add index for policy_holder_id to enable filtering
+        client.create_payload_index(
+            collection_name=QDRANT_COLLECTION,
+            field_name="policy_holder_id",
+            field_schema=PayloadSchemaType.KEYWORD
         )

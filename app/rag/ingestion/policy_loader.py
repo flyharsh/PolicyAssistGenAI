@@ -19,7 +19,10 @@ def load_policy_documents(policy_folder: str) -> list[dict]:
             with open(os.path.join(policy_folder, filename), "r") as f:
                 try:
                     policy = json.load(f)
-                    policies.append(policy)
+                    if isinstance(policy, list):
+                        policies.extend(policy)
+                    else:
+                        policies.append(policy)
                 except json.JSONDecodeError:
                     print(f"⚠️ Skipping invalid JSON file: {filename}")
     return policies

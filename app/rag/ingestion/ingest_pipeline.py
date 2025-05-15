@@ -9,6 +9,9 @@ from app.rag.vectorstore.embedder import generate_embeddings
 from app.rag.vectorstore.qdrant_client import get_qdrant_client, ensure_collection
 from app.rag.vectorstore.vector_uploader import upload_embeddings
 from app.rag.vectorstore.model_loader import load_embedding_model
+from app.rag.ingestion.collection_manager import reset_and_prepare_collection
+from app.rag.vectorstore.qdrant_client import get_qdrant_client
+from app.rag.vectorstore.model_loader import load_embedding_model
 
 def ingest_all_policies(policy_folder: str):
     """
@@ -23,7 +26,7 @@ def ingest_all_policies(policy_folder: str):
     vector_size = model.get_sentence_embedding_dimension()
 
     client = get_qdrant_client()
-    ensure_collection(client, vector_size)
+    reset_and_prepare_collection(client, vector_size)
 
     for policy in tqdm(policies, desc="Ingesting policies"):
         policy_id = policy["policy_id"]
