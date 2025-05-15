@@ -8,6 +8,7 @@ from app.config import FLASK_SECRET_KEY, FLASK_PORT
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "ui", "templates")
 
+
 def create_app():
     app = Flask(__name__, template_folder=TEMPLATE_DIR)
     app.secret_key = FLASK_SECRET_KEY
@@ -21,6 +22,7 @@ def create_app():
         return {"message": "Insurance Chatbot API is running!"}
 
     return app
+
 
 if __name__ == "__main__":
     app = create_app()
