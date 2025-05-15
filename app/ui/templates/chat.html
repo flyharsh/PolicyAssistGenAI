@@ -1,0 +1,32 @@
+<!-- app/ui/templates/chat.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>InsuranceBot Chat</title>
+</head>
+<body>
+  <h2>Welcome, {{ user_id }}</h2>
+
+  {% if chat_log %}
+    <div>
+      {% for entry in chat_log %}
+        <p><b>You:</b> {{ entry.user }}</p>
+        <p><b>Bot:</b> {{ entry.bot }}</p>
+        {% if entry.suggestions %}
+          <ul>
+            {% for s in entry.suggestions %}
+              <li>→ {{ s.text }} <i>({{ s.tag }})</i></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        <hr>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <form method="post" action="/chat-ui">
+    <input type="text" name="query" placeholder="Ask about your policy..." required>
+    <button type="submit">Send</button>
+  </form>
+</body>
+</html>

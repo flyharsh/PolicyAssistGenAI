@@ -1,0 +1,134 @@
+[
+  {
+    "user_id": "user_001",
+    "user_name": "John Doe",
+    "email": "john@example.com",
+    "policy_id": "policy_1004",
+    "policy_type": "Health Insurance",
+    "provider": "Manulife",
+    "start_date": "2024-11-18",
+    "end_date": "2028-04-18",
+    "coverage_amount": "$74,089",
+    "premium": "$197/month",
+    "status": "Active",
+    "beneficiaries": [
+      "John Beneficiary"
+    ],
+    "claims_made": [
+      {
+        "claim_id": "claim_4",
+        "date": "2025-01-15",
+        "amount": "$4166",
+        "status": "Approved"
+      }
+    ],
+    "terms": {
+      "deductible": "$411/year",
+      "co_pay": "30%",
+      "exclusions": [
+        "Cosmetic procedures",
+        "Dental implants"
+      ]
+    },
+    "policy_text": "This health insurance policy covers major liabilities and risks as defined in the agreement. Exclusions apply for Cosmetic procedures, Dental implants."
+  },
+  {
+    "user_id": "user_002",
+    "user_name": "Alice Smith",
+    "email": "alice@example.com",
+    "policy_id": "policy_1005",
+    "policy_type": "Health Insurance",
+    "provider": "Manulife",
+    "start_date": "2023-06-15",
+    "end_date": "2027-10-15",
+    "coverage_amount": "$115,579",
+    "premium": "$347/month",
+    "status": "Active",
+    "beneficiaries": [
+      "Alice Beneficiary"
+    ],
+    "claims_made": [
+      {
+        "claim_id": "claim_5",
+        "date": "2025-03-05",
+        "amount": "$3119",
+        "status": "Approved"
+      }
+    ],
+    "terms": {
+      "deductible": "$273/year",
+      "co_pay": "26%",
+      "exclusions": [
+        "Cosmetic procedures",
+        "Dental implants"
+      ]
+    },
+    "policy_text": "This health insurance policy covers major liabilities and risks as defined in the agreement. Exclusions apply for Cosmetic procedures, Dental implants."
+  },
+  {
+    "user_id": "user_003",
+    "user_name": "Bob Lee",
+    "email": "bob@example.com",
+    "policy_id": "policy_1006",
+    "policy_type": "Health Insurance",
+    "provider": "Manulife",
+    "start_date": "2024-11-09",
+    "end_date": "2027-06-15",
+    "coverage_amount": "$71,583",
+    "premium": "$313/month",
+    "status": "Active",
+    "beneficiaries": [
+      "Bob Beneficiary"
+    ],
+    "claims_made": [
+      {
+        "claim_id": "claim_6",
+        "date": "2025-02-22",
+        "amount": "$3663",
+        "status": "Rejected"
+      }
+    ],
+    "terms": {
+      "deductible": "$473/year",
+      "co_pay": "24%",
+      "exclusions": [
+        "Cosmetic procedures",
+        "Dental implants"
+      ]
+    },
+    "policy_text": "This health insurance policy covers major liabilities and risks as defined in the agreement. Exclusions apply for Cosmetic procedures, Dental implants."
+  },
+  {
+    "user_id": "user_002",
+    "user_name": "Alice Smith",
+    "email": "alice@example.com",
+    "policy_id": "policy_1007",
+    "policy_type": "Home Insurance",
+    "provider": "Manulife",
+    "start_date": "2022-11-08",
+    "end_date": "2027-04-16",
+    "coverage_amount": "$97,424",
+    "premium": "$460/month",
+    "status": "Active",
+    "beneficiaries": [
+      "Alice Beneficiary"
+    ],
+    "claims_made": [
+      {
+        "claim_id": "claim_7",
+        "date": "2025-04-07",
+        "amount": "$2001",
+        "status": "Approved"
+      }
+    ],
+    "terms": {
+      "deductible": "$363/year",
+      "co_pay": "26%",
+      "exclusions": [
+        "Flood damage",
+        "Termite infestation"
+      ]
+    },
+    "policy_text": "This home insurance policy covers major liabilities and risks as defined in the agreement. Exclusions apply for Flood damage, Termite infestation."
+  }
+]
