@@ -5,13 +5,18 @@
   <title>InsuranceBot Chat</title>
 </head>
 <body>
+  <!-- Display the logged-in user's ID -->
   <h2>Welcome, {{ user_id }}</h2>
 
+  <!-- Show chat history if available -->
   {% if chat_log %}
     <div>
       {% for entry in chat_log %}
+        <!-- Show user's message -->
         <p><b>You:</b> {{ entry.user }}</p>
+        <!-- Show bot's response -->
         <p><b>Bot:</b> {{ entry.bot }}</p>
+        <!-- Show suggested next steps if present -->
         {% if entry.suggestions %}
           <ul>
             {% for s in entry.suggestions %}
@@ -24,6 +29,7 @@
     </div>
   {% endif %}
 
+  <!-- Chat input form for submitting new queries -->
   <form method="post" action="/chat-ui">
     <input type="text" name="query" placeholder="Ask about your policy..." required>
     <button type="submit">Send</button>

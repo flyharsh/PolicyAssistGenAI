@@ -380,6 +380,12 @@ A well-organized, modular layout with each component documented.
 - No hard-coded secrets or stateful global logic
 
 ---
+### 🧪 Quality Checks
+
+- ✅ 100% passing unit tests (`pytest`)
+- ✅ Code coverage tracked (`pytest-cov`)
+- ✅ Lint clean (`flake8`)
+- ✅ Auto-formatted with Black (`PEP8-compliant`)
 
 ### 📦 Config Management
 

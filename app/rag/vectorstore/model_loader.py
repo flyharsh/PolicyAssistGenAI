@@ -4,6 +4,7 @@ from sentence_transformers import SentenceTransformer
 from functools import lru_cache
 import os
 
+
 @lru_cache(maxsize=1)
 def load_embedding_model(model_name: str = None) -> SentenceTransformer:
     """
@@ -15,7 +16,8 @@ def load_embedding_model(model_name: str = None) -> SentenceTransformer:
     Returns:
         SentenceTransformer: The loaded model instance.
     """
+    # Use provided model name or get from environment variable, fallback to default
     model_name = model_name or os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
     print(f"🔄 Loading embedding model: {model_name}")
-    model = SentenceTransformer(model_name)
-    return model
+    model = SentenceTransformer(model_name)  # Load the sentence transformer model
+    return model  # Return the loaded model instance
