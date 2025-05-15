@@ -19,12 +19,12 @@ It is designed with scalability and extensibility at its core—making it adapta
 
 Insurance data is buried in dense PDFs, hard-to-navigate portals, or call center workflows. Most users:
 
-- Don’t know what pocily conditions they have
+- Don’t know what policy conditions they have
 - Struggle to access premium or claim details
 - Waste time parsing jargon-heavy policy documents
 - Can’t get answers without policy numbers or form IDs
 
-PolicyAssistGenAI removes that friction by:
+**PolicyAssistGenAI removes that friction by:**
 
 - Letting users ask real questions in natural language
 - Surfacing only **their own** relevant policy information
@@ -37,17 +37,16 @@ PolicyAssistGenAI removes that friction by:
 
 This app isn’t just an insurance chatbot—it’s a **reusable framework** for document-based GenAI agents.
 
-> The core idea: **plug and play with any data at any scale**—while you have complete control over your data.  
-> It’s always your choice **where and how you want to store it**.  
+> **Plug and play with any data at any scale**—while you have complete control over your data.  
 > The app can be extended to read from **any source**—local files, APIs, cloud buckets, or databases—**powered by private RAG**.
 
-This makes it ideal for:
+**Ideal for:**
 
-- 📊 **Finance** – investment analysis bots  
-- 🏥 **Healthcare** – policy explainers, eligibility assistants  
-- 🏛️ **Legal** – contract clause Q&A agents  
-- 🏫 **Education** – syllabus and catalog assistants  
-- 🛠 **Enterprise** – HR handbooks, IT helpdesk bots
+- 📊 Finance – investment analysis bots  
+- 🏥 Healthcare – policy explainers, eligibility assistants  
+- 🏛️ Legal – contract clause Q&A agents  
+- 🏫 Education – syllabus and catalog assistants  
+- 🛠 Enterprise – HR handbooks, IT helpdesk bots
 
 ---
 
@@ -57,22 +56,25 @@ This makes it ideal for:
 - **Internal support agents** who need to reduce manual lookups  
 - **Builders** exploring how to operationalize LLMs over private data  
 
+---
+
 ## 🛠️ Developer Guide
 
 ### 🧰 Tech Stack & Methodologies
 
 | Layer           | Stack                          |
-|----------------|---------------------------------|
-| Web Framework  | Python + Flask + Jinja2         |
-| Retrieval      | Qdrant Vector DB (filtered RAG) |
-| Embeddings     | Sentence Transformers (MiniLM)  |
-| LLM Response   | OpenAI GPT-3.5 Turbo (via API)  |
-| Frontend       | HTML (Jinja2 Templates)         |
-| Config         | `.env` (per environment)        |
-| Container      | Docker                          |
-| Testing        | `pytest`                        |
+|-----------------|--------------------------------|
+| Web Framework   | Python + Flask + Jinja2        |
+| Retrieval       | Qdrant Vector DB (filtered RAG)|
+| Embeddings      | Sentence Transformers (MiniLM) |
+| LLM Response    | OpenAI GPT-3.5 Turbo (via API) |
+| Frontend        | HTML (Jinja2 Templates)        |
+| Config          | `.env` (per environment)       |
+| Container       | Docker                         |
+| Testing         | `pytest`                       |
 
 **Development Principles:**
+
 - 🔁 **Modularity-first** — each layer is isolated, testable, and swappable.
 - ✅ **Production-readiness** — environment-aware config, clean logs, and fallbacks.
 - 🧩 **Plug-and-play** — works with any data source and can be adapted easily.
@@ -82,7 +84,7 @@ This makes it ideal for:
 
 ### 🧠 Architecture Overview
 
-```text
+```
 [ UI ] <--→ [ Flask Server ]
                   ↓
          [ User Query Handler ]
@@ -98,42 +100,35 @@ This makes it ideal for:
       [ OpenAI GPT-3.5 Turbo Response ]
                   ↓
      [ Answer + Suggested Next Steps ]
-----
+```
+
 Each query passes through a modular pipeline that:
 
-    Embeds the user query
-
-    Filters chunks by policy_holder_id
-
-    Sends filtered context to the LLM
-
-    Returns a concise answer + LLM-suggested follow-ups
+1. Embeds the user query
+2. Filters chunks by policy_holder_id
+3. Sends filtered context to the LLM
+4. Returns a concise answer + LLM-suggested follow-ups
 
 ---
 
 ### 🔁 Query Lifecycle
 
-1- User logs in using a simple form (sets user_id in session)
+1. User logs in using a simple form (sets user_id in session)
+2. Enters a query in natural language
+3. Query → Embedded using Sentence Transformers
+4. Embedded vector → Sent to Qdrant, filtered by user_id
+5. Top matching chunks → Passed to OpenAI GPT-3.5 Turbo
 
-2- Enters a query in natural language
+**LLM generates:**
 
-3- Query → Embedded using Sentence Transformers
+- 🧠 A relevant answer
+- 🧭 Up to 2 follow-up suggestions with action tags
 
-4- Embedded vector → Sent to Qdrant, filtered by user_id
+Answer is displayed in chat UI with suggestions rendered below.
 
-5- Top matching chunks → Passed to OpenAI GPT-3.5 Turbo
+> 🧩 This flow is generic and can support finance, legal, healthcare, or enterprise FAQs etc — just by changing the documents and filters.
 
-LLM generates:
-
-🧠 A relevant answer
-
-🧭 Up to 2 follow-up suggestions with action tags
-
-Answer is displayed in chat UI with suggestions rendered below
-
-🧩 This flow is generic and can support finance, legal, healthcare, or enterprise FAQs etc — just by changing the documents and filters.
 ---
-
 
 ## ⚙️ Setup Instructions
 
@@ -149,60 +144,77 @@ Answer is displayed in chat UI with suggestions rendered below
 ### 📦 Installation & Running (Step-by-Step)
 
 1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourname/PolicyAssistGenAI.git
-   cd PolicyAssistGenAI
+    ```bash
+    git clone https://github.com/yourname/PolicyAssistGenAI.git
+    cd PolicyAssistGenAI
+    ```
 
-2. Create Virtual Environment
-
+2. **Create Virtual Environment**
+    ```bash
     python -m venv .venv
-    source .venv/bin/activate  # For Windows: .venv\\Scripts\\activate
+    # For Windows:
+    .venv\Scripts\activate
+    # For Unix/Mac:
+    source .venv/bin/activate
+    ```
 
-3. Install Dependencies:
+3. **Install Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-        pip install -r requirements.txt
-
-4. Start Qdrant (Docker):
-
+4. **Start Qdrant (Docker)**
+    ```bash
     docker run -p 6333:6333 qdrant/qdrant
+    ```
 
-5. Configure Environment Variables
-    Create a .env file in the root directory.
+5. **Configure Environment Variables**
+    - Create a `.env` file in the root directory.
+    - Use the `.env.example` as a reference.
 
-    Use the .env.example as a reference.
-
-6. Run Ingestion Script:
+6. **Run Ingestion Script**
+    ```bash
     python app/rag/ingestion/ingest_pipeline.py
+    ```
 
-7. Start the Application
+7. **Start the Application**
+    ```bash
     python app/main.py
+    ```
 
-##🧪 Testing
+---
+
+### 🧪 Testing
+
 To run all test cases:
-    pytest tests/
+```bash
+pytest tests/
+```
 
-## App Runs At:
-http://localhost:8000/login → Login UI
+---
 
-http://localhost:8000/chat-ui → Chat interface
+### 🚀 App Runs At
+
+- [http://localhost:8000/login](http://localhost:8000/login) → Login UI
+- [http://localhost:8000/chat-ui](http://localhost:8000/chat-ui) → Chat interface
+
+---
 
 ## 📦 Dependencies
 
-This project uses the following key packages and tools:
-
 ### 🧰 Python Libraries
 
-| Package              | Purpose                                      |
-|----------------------|----------------------------------------------|
-| `flask`              | API server and web routing                   |
-| `jinja2`             | HTML templating for frontend                 |
-| `openai`             | ChatGPT API integration                      |
-| `qdrant-client`      | Vector database client                       |
-| `sentence-transformers` | Embedding model for RAG                  |
-| `python-dotenv`      | Load `.env` config across environments       |
-| `tqdm`               | Progress bars for ingestion                  |
-| `requests`           | HTTP utilities                              |
-| `pytest`             | Unit testing                                 |
+| Package                  | Purpose                                 |
+|--------------------------|-----------------------------------------|
+| `flask`                  | API server and web routing              |
+| `jinja2`                 | HTML templating for frontend            |
+| `openai`                 | ChatGPT API integration                 |
+| `qdrant-client`          | Vector database client                  |
+| `sentence-transformers`  | Embedding model for RAG                 |
+| `python-dotenv`          | Load `.env` config across environments  |
+| `tqdm`                   | Progress bars for ingestion             |
+| `requests`               | HTTP utilities                          |
+| `pytest`                 | Unit testing                            |
 
 ---
 
@@ -214,31 +226,30 @@ This project uses the following key packages and tools:
 
 ### 🧠 Models Used
 
-| Model                            | Role             |
-|----------------------------------|------------------|
-| `all-MiniLM-L6-v2` (SBERT)       | Text embedding   |
-| `gpt-3.5-turbo` (OpenAI)         | LLM response     |
+| Model                      | Role           |
+|----------------------------|----------------|
+| `all-MiniLM-L6-v2` (SBERT) | Text embedding |
+| `gpt-3.5-turbo` (OpenAI)   | LLM response   |
 
 > All models and keys are environment-configurable via `.env`.
 
 ---
+
 ## 📷 Screenshots + UX Flow
 
 > A guided walkthrough of the user experience, with screenshots and context.
 
+1. **Login Screen**
+    - Simple form captures the `user_id` and a dummy password.
+    - No real authentication—just session tracking.
+    - This `user_id` is used to filter personalized policy responses.
+
+2. **Chat Interface**
+3. **RAG-Powered Answering**
+4. **Follow-up Suggestions**
+5. **Data Isolation Preview**
+
 ---
-
-1. Login Screen
-
-- A simple form captures the `user_id` and a dummy password.
-- No real authentication is performed—just session tracking.
-- This `user_id` is used to filter personalized policy responses.
-
-2. Chat Interface
-3. RAG-Powered Answering
-
-4. Follow-up Suggestions
-5. Data Isolation Preview
 
 ## 🧼 Code Design & Quality Principles
 
@@ -250,14 +261,115 @@ This project prioritizes **readability, modularity, and maintainability**—foll
 
 The app is divided into logical, reusable layers:
 
-| Module            | Responsibility                             |
-|-------------------|---------------------------------------------|
-| `api/`            | HTTP routes (chat, login)                   |
-| `core/`           | Application logic (chat service, control flow) |
-| `rag/`            | Ingestion + vector storage and retrieval    |
-| `llm/`            | Prompt building and response handling       |
-| `ui/`             | Jinja-based frontend (login + chat pages)   |
-| `utils/`          | Logger, validators, formatting helpers      |
+| Module      | Responsibility                                 |
+|-------------|------------------------------------------------|
+| `api/`      | HTTP routes (chat, login)                      |
+| `core/`     | Application logic (chat service, control flow) |
+| `rag/`      | Ingestion + vector storage and retrieval       |
+| `llm/`      | Prompt building and response handling          |
+| `ui/`       | Jinja-based frontend (login + chat pages)      |
+| `utils/`    | Logger, validators, formatting helpers         |
+
+
+## 🗂 Project Structure & File Purpose (Detailed)
+
+A well-organized, modular layout with each component documented.
+
+---
+
+### 🔧 Root Level
+
+| File/Folder              | Description |
+|--------------------------|-------------|
+| `README.md`              | Complete project overview, instructions, and context |
+| `Dockerfile`             | Production-ready container spec for the Flask app |
+| `docker-compose.yml`     | Defines local services: app + Qdrant |
+| `requirements.txt`       | All dependencies with pinned versions |
+| `.env`                   | Environment-specific config (e.g., API keys, model names) |
+| `data/policies/`         | JSON files representing mocked insurance policies per user |
+
+---
+
+### 🔁 Ingestion: `app/rag/ingestion/`
+
+| File/Folder              | Description |
+|--------------------------|-------------|
+| `ingest_pipeline.py`     | Orchestrates full ingestion: load → chunk → embed → upload |
+| `policy_loader.py`       | Reads and parses JSON policy files |
+| `text_splitter.py`       | Chunks long policy texts into manageable segments |
+| `collection_manager.py`  | Creates and indexes Qdrant collection with user-level filters |
+
+---
+
+### 📦 Vector Store: `app/rag/vectorstore/`
+
+| File                     | Description |
+|--------------------------|-------------|
+| `model_loader.py`        | Loads and caches the sentence-transformer model |
+| `embedder.py`            | Encodes text chunks into dense vector embeddings |
+| `qdrant_client.py`       | Connects to and manages Qdrant client instance |
+| `vector_uploader.py`     | Uploads embedded chunks with metadata into Qdrant |
+| `vector_retriever.py`    | Performs vector search with user-specific filtering (RAG) |
+
+---
+
+### 🤖 LLM Layer: `app/llm/`
+
+| File                     | Description |
+|--------------------------|-------------|
+| `responder.py`           | Sends user query + context to OpenAI and parses response |
+| `prompt_builder.py`      | (Optional) Build advanced templated system prompts |
+
+---
+
+### 🧠 Core Logic: `app/core/`
+
+| File                     | Description |
+|--------------------------|-------------|
+| `chat/chat_service.py`   | Central handler for query → retrieval → LLM → final answer |
+
+---
+
+### 🌐 API Routes: `app/api/`
+
+| File                     | Description |
+|--------------------------|-------------|
+| `chat_routes.py`         | Exposes `/chat` POST endpoint for programmatic use |
+| `auth_routes.py`         | Handles `/login` and `/chat-ui` UI logic and session state |
+
+---
+
+### 🎨 Frontend UI: `app/ui/`
+
+| File                     | Description |
+|--------------------------|-------------|
+| `templates/login.html`   | Minimal login form (user_id + dummy password) |
+| `templates/chat.html`    | Main chat interface for sending questions + viewing answers |
+| `static/style.css`       | Optional custom styles for the frontend |
+
+---
+
+### 🛠 Utilities: `app/utils/`
+
+| File                     | Description |
+|--------------------------|-------------|
+| `logger.py`              | Logging setup and abstraction (extendable) |
+| `validators.py`          | Basic input validation or sanitization logic |
+| `formatter.py`           | Response formatting and cleaning tools |
+
+---
+
+### 🧪 Tests: `tests/`
+
+| File                     | Description |
+|--------------------------|-------------|
+| `test_auth.py`           | Validates UI/login flow behavior |
+| `test_chat.py`           | Tests end-to-end query processing with mock LLM |
+| `test_llm.py`            | Ensures correct LLM prompt handling + response structure |
+| `test_retrieval.py`      | Verifies vector search + metadata filtering |
+
+---
+
 
 ---
 
@@ -303,12 +415,11 @@ The app is divided into logical, reusable layers:
 
 > ✅ This codebase is audit-ready, and built with future extensibility in mind.
 
+---
 
 ## 🚀 Future Scope
 
 PolicyAssistGenAI is architected for long-term growth and multi-domain adaptability. The following enhancements are envisioned to take this from demo-grade to production-ready:
-
----
 
 ### 🔐 Authentication & Access Control
 
@@ -364,9 +475,9 @@ PolicyAssistGenAI is architected for long-term growth and multi-domain adaptabil
 - K8s-ready manifests
 - CI/CD pipeline for test, lint, build
 
----
-
 > 🚧 These features can be scoped based on production use case—whether customer-facing, internal support, or a data discovery tool.
+
+---
 
 ## 🙌 Credits & Contact
 
@@ -383,9 +494,9 @@ This project was conceptualized, developed, and refined as part of a GenAI inter
 
 **Harsh**  
 Data Engineer | AI Builder | GenAI Developer  
-📍 Based in Toronto  
+📍 Toronto  
 📫 flyharsh2@gmail.com  
-🌐 https://www.linkedin.com/in/flyharsh/
+🌐 [LinkedIn](https://www.linkedin.com/in/flyharsh/)
 
 ---
 
@@ -396,5 +507,3 @@ GitHub: [github.com/yourname/PolicyAssistGenAI](https://github.com/yourname/Poli
 ---
 
 > If you'd like to collaborate, extend this project, or want a walkthrough, feel free to reach out.
-
-
