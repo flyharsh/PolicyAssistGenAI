@@ -2,11 +2,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>InsuranceBot Chat</title>
+  <title>Policy Assistant</title>
 </head>
 <body>
   <!-- Display the logged-in user's ID -->
   <h2>Welcome, {{ user_id }}</h2>
+
+
+  <!-- End Session Button (top-right) -->
+  <div style="text-align: right; margin-bottom: 15px">
+    <form action="/logout" method="post">
+      <button type="submit" style="background-color: #f44336; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
+        🔚 End Session
+      </button>
+    </form>
+  </div>
+  
 
   <!-- Show chat history if available -->
   {% if chat_log %}
