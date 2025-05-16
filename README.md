@@ -240,14 +240,26 @@ pytest tests/
 > A guided walkthrough of the user experience, with screenshots and context.
 
 1. **Login Screen**
+![login page](docs\screenshots\image-login.png)
     - Simple form captures the `user_id` and a dummy password.
     - No real authentication—just session tracking.
     - This `user_id` is used to filter personalized policy responses.
+![logged in](docs\screenshots\image-lgdin.png)
 
 2. **Chat Interface**
+![chat window](docs\screenshots\chat-window.png)
+
 3. **RAG-Powered Answering**
+![QA with bot](docs\screenshots\chat-context.png)
+  
 4. **Follow-up Suggestions**
+![wherever relevant- suggests follow-up steps](docs\screenshots\follow_up-context.png)
+
 5. **Data Isolation Preview**
+![only responds with user specific data](docs\screenshots\context-chatui.png)
+
+        -in all the screenshots and end session button is visible- that clears current session and send back to login screen
+
 
 ---
 

@@ -2,6 +2,7 @@
 
 from flask import Blueprint, request, render_template, redirect, session
 from app.core.chat.chat_service import process_user_query
+from flask import session, redirect, url_for
 
 # Create a Flask Blueprint for authentication-related routes
 auth_bp = Blueprint("auth", __name__)
@@ -57,3 +58,8 @@ def chat_ui():
     return render_template(
         "chat.html", user_id=user_id, chat_log=chat_memory.get(user_id, [])
     )
+
+@auth_bp.route("/logout", methods=["POST"])
+def logout():
+    session.clear()  # Clear all session data
+    return redirect(url_for("auth.login"))
